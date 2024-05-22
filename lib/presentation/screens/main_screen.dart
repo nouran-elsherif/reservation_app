@@ -6,6 +6,7 @@ import 'package:reservation_app/bloc/bloc.dart';
 import 'package:reservation_app/core/presentation/widgets/rectangle_button_widget.dart';
 import 'package:reservation_app/core/services/logger_service.dart';
 import 'package:reservation_app/core/utils/constants/app_assets.dart';
+import 'package:reservation_app/core/utils/constants/constants.dart';
 import 'package:reservation_app/model/reservation.dart';
 import 'package:reservation_app/presentation/widgets/reservations_list_widget.dart';
 import 'package:reservation_app/presentation/widgets/tickets_list_widget.dart';
@@ -40,6 +41,7 @@ class _MainScreenState extends State<MainScreen> {
         isScrollControlled: true,
         builder: (BuildContext context) {
           return Scaffold(
+            key: WidgetKeys.reservationsModalKey,
             resizeToAvoidBottomInset: false,
             backgroundColor: Colors.transparent,
             appBar: null,
@@ -106,6 +108,7 @@ class _MainScreenState extends State<MainScreen> {
         isScrollControlled: true,
         builder: (BuildContext context) {
           return Scaffold(
+            key: WidgetKeys.ticketsModalKey,
             resizeToAvoidBottomInset: false,
             backgroundColor: Colors.transparent,
             appBar: null,
@@ -210,6 +213,7 @@ class _MainScreenState extends State<MainScreen> {
             _buildPageHeader(),
             const Spacer(),
             RectangleButtonWidget(
+              key: WidgetKeys.openReservationButtonKey,
               fillColor: isDarkMode ? const Color.fromRGBO(224, 230, 243, 1) : const Color.fromRGBO(14, 26, 45, 1),
               onPress: onTapOpenReservation,
               width: 286.w,
@@ -222,6 +226,7 @@ class _MainScreenState extends State<MainScreen> {
               height: 24.h,
             ),
             RectangleButtonWidget(
+              key: WidgetKeys.iosTicketButtonKey,
               fillColor: isDarkMode ? const Color.fromRGBO(23, 23, 23, 1) : const Color.fromRGBO(239, 239, 239, 1),
               onPress: onTapAndroidTicket,
               width: 286.w,
@@ -235,6 +240,7 @@ class _MainScreenState extends State<MainScreen> {
               height: 24.h,
             ),
             RectangleButtonWidget(
+              key: WidgetKeys.androidTicketButtonKey,
               fillColor: isDarkMode ? const Color.fromRGBO(23, 23, 23, 1) : const Color.fromRGBO(239, 239, 239, 1),
               onPress: onTapAndroidTicket,
               width: 286.w,
