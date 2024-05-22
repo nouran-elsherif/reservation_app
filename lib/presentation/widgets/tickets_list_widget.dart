@@ -27,7 +27,6 @@ class _TicketsListWidgetState extends State<TicketsListWidget> {
 
   _buildBody() {
     return Container(
-        decoration: BoxDecoration(color: widget.isDarkMode ? Colors.black : const Color.fromRGBO(250, 250, 250, 1)),
         padding: EdgeInsetsDirectional.symmetric(horizontal: widget.addExtraHorizontalPadding ? 25.w : 0),
         child: widget.userTickets.isNotEmpty
             ? ListView(shrinkWrap: true, physics: const NeverScrollableScrollPhysics(), children: [
@@ -55,96 +54,101 @@ class _TicketsListWidgetState extends State<TicketsListWidget> {
 
   _buildTicketListItem(UserTicket userTicket) {
     Color valueColor = widget.isDarkMode ? const Color.fromRGBO(154, 154, 154, 1) : const Color.fromRGBO(76, 76, 76, 1);
-    return CustomPaint(
-        painter: TicketPainter(
-          borderColor: widget.isDarkMode ? Colors.black : Colors.white,
-          bgColor: widget.isDarkMode ? const Color.fromRGBO(45, 45, 45, 1) : const Color.fromRGBO(233, 233, 233, 1),
-        ),
-        child: Container(
-          padding: const EdgeInsetsDirectional.all(14),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  if (userTicket.ticketUserData.avatar.isNotEmpty)
-                    Container(
-                      width: 34.w,
-                      height: 34.w,
-                      clipBehavior: Clip.hardEdge,
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: widget.isDarkMode ? Colors.white : Colors.black),
-                          shape: BoxShape.circle),
-                      child: Image.network(
-                        //   'https://image.tmdb.org/t/p/w500${reservation.posterPath!}',
-                        userTicket.ticketUserData.avatar,
+    return Container(
+      margin: EdgeInsets.only(bottom: 10.h),
+      child: CustomPaint(
+          painter: TicketPainter(
+            borderColor: widget.isDarkMode ? Colors.black : Colors.white,
+            bgColor: widget.isDarkMode ? const Color.fromRGBO(45, 45, 45, 1) : const Color.fromRGBO(233, 233, 233, 1),
+          ),
+          child: Container(
+            padding: const EdgeInsetsDirectional.all(14),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    if (userTicket.ticketUserData.avatar.isNotEmpty)
+                      Container(
+                        width: 34.w,
+                        height: 34.w,
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                            border: Border.all(width: 1, color: widget.isDarkMode ? Colors.white : Colors.black),
+                            shape: BoxShape.circle),
+                        child: Image.network(
+                          //   'https://image.tmdb.org/t/p/w500${reservation.posterPath!}',
+                          userTicket.ticketUserData.avatar,
+                        ),
                       ),
+                    const SizedBox(
+                      width: 6.5,
                     ),
-                  const SizedBox(
-                    width: 6.5,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${userTicket.ticketUserData.firstName} ${userTicket.ticketUserData.lastName}',
+                          style: TextStyle(
+                              color: widget.isDarkMode ? Colors.white : Colors.black, fontWeight: FontWeight.w700, fontSize: 18),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        SizedBox(height: 5.h),
+                        Text(
+                          '#${userTicket.ticketId}',
+                          style: TextStyle(color: valueColor, fontWeight: FontWeight.w400, fontSize: 15),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 30.h,
+                ),
+                RichText(
+                  text: TextSpan(
                     children: [
-                      Text(
-                        '${userTicket.ticketUserData.firstName} ${userTicket.ticketUserData.lastName}',
+                      TextSpan(
+                        text: "Ticket Type: ",
                         style: TextStyle(
-                            color: widget.isDarkMode ? Colors.white : Colors.black, fontWeight: FontWeight.w700, fontSize: 18),
-                        overflow: TextOverflow.ellipsis,
+                            color: widget.isDarkMode ? Colors.white : Colors.black, fontWeight: FontWeight.w400, fontSize: 15),
                       ),
-                      SizedBox(height: 5.h),
-                      Text(
-                        '#${userTicket.ticketId}',
-                        style: TextStyle(color: valueColor, fontWeight: FontWeight.w400, fontSize: 15),
+                      TextSpan(
+                        text: userTicket.ticketTypeName,
+                        style: TextStyle(
+                            color:
+                                widget.isDarkMode ? const Color.fromRGBO(154, 154, 154, 1) : const Color.fromRGBO(76, 76, 76, 1),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 15),
                       ),
                     ],
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 30.h,
-              ),
-              RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: "Ticket Type: ",
-                      style: TextStyle(
-                          color: widget.isDarkMode ? Colors.white : Colors.black, fontWeight: FontWeight.w400, fontSize: 15),
-                    ),
-                    TextSpan(
-                      text: userTicket.ticketTypeName,
-                      style: TextStyle(
-                          color: widget.isDarkMode ? const Color.fromRGBO(154, 154, 154, 1) : const Color.fromRGBO(76, 76, 76, 1),
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 5.h,
-              ),
-              RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: "Seat: ",
-                      style: TextStyle(
-                          color: widget.isDarkMode ? Colors.white : Colors.black, fontWeight: FontWeight.w400, fontSize: 15),
-                    ),
-                    TextSpan(
-                      text: '${userTicket.ticketSystemId} / Seat ${userTicket.seat}',
-                      style: TextStyle(
-                          color: widget.isDarkMode ? const Color.fromRGBO(154, 154, 154, 1) : const Color.fromRGBO(76, 76, 76, 1),
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15),
-                    ),
-                  ],
+                SizedBox(
+                  height: 5.h,
                 ),
-              ),
-            ],
-          ),
-        ));
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "Seat: ",
+                        style: TextStyle(
+                            color: widget.isDarkMode ? Colors.white : Colors.black, fontWeight: FontWeight.w400, fontSize: 15),
+                      ),
+                      TextSpan(
+                        text: '${userTicket.ticketSystemId} / Seat ${userTicket.seat}',
+                        style: TextStyle(
+                            color:
+                                widget.isDarkMode ? const Color.fromRGBO(154, 154, 154, 1) : const Color.fromRGBO(76, 76, 76, 1),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 15),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          )),
+    );
   }
 }

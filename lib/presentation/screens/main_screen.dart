@@ -27,8 +27,6 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
-// s
-
   setIsDarkMode(bool value) {
     setState(() {
       isDarkMode = value;
@@ -85,7 +83,7 @@ class _MainScreenState extends State<MainScreen> {
                             Container(
                                 // padding: EdgeInsets.on(vertical: 61.h),
                                 color: isDarkMode ? Colors.black : const Color.fromRGBO(250, 250, 250, 1),
-                                height: 0.8.sh,
+                                height: 0.9.sh,
                                 child: ReservationsListWidget(
                                   isDarkMode: isDarkMode,
                                 ))
@@ -105,7 +103,7 @@ class _MainScreenState extends State<MainScreen> {
     showModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
-        isScrollControlled: false,
+        isScrollControlled: true,
         builder: (BuildContext context) {
           return Scaffold(
             resizeToAvoidBottomInset: false,
@@ -190,35 +188,26 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return
-        // BlocProvider(
-        //   create: (context) => moviesBloc,
-        //   child:
-        Scaffold(
-            extendBody: true,
-            //   bottomNavigationBar: const NavigationBarWidget(),
-            appBar: AppBar(
-              toolbarHeight: 0,
-              foregroundColor: isDarkMode ? Color.fromRGBO(239, 239, 239, 1) : Color.fromRGBO(23, 23, 23, 1),
-              backgroundColor: isDarkMode ? Color.fromRGBO(23, 23, 23, 1) : Color.fromRGBO(239, 239, 239, 1),
-              // title: Text(widget.title),
-            ),
-            body: _buildBody());
+    return Scaffold(
+        extendBody: true,
+        appBar: AppBar(
+          toolbarHeight: 0,
+          foregroundColor: isDarkMode ? const Color.fromRGBO(239, 239, 239, 1) : const Color.fromRGBO(23, 23, 23, 1),
+          backgroundColor: isDarkMode ? const Color.fromRGBO(23, 23, 23, 1) : const Color.fromRGBO(239, 239, 239, 1),
+        ),
+        body: _buildBody());
     // );
   }
 
   _buildBody() {
     return Container(
-      color: isDarkMode ? Color.fromRGBO(23, 23, 23, 1) : Color.fromRGBO(239, 239, 239, 1),
+      color: isDarkMode ? const Color.fromRGBO(23, 23, 23, 1) : const Color.fromRGBO(239, 239, 239, 1),
       padding: EdgeInsetsDirectional.only(start: 32.w, end: 30.w),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             _buildPageHeader(),
-            // const SizedBox(
-            //   height: 16,
-            // ),
             const Spacer(),
             RectangleButtonWidget(
               fillColor: isDarkMode ? const Color.fromRGBO(224, 230, 243, 1) : const Color.fromRGBO(14, 26, 45, 1),
@@ -234,7 +223,7 @@ class _MainScreenState extends State<MainScreen> {
             ),
             RectangleButtonWidget(
               fillColor: isDarkMode ? const Color.fromRGBO(23, 23, 23, 1) : const Color.fromRGBO(239, 239, 239, 1),
-              onPress: () {},
+              onPress: onTapAndroidTicket,
               width: 286.w,
               height: 51.h,
               textColor: isDarkMode ? const Color.fromRGBO(224, 230, 243, 1) : const Color.fromRGBO(14, 26, 45, 1),
@@ -246,7 +235,7 @@ class _MainScreenState extends State<MainScreen> {
               height: 24.h,
             ),
             RectangleButtonWidget(
-              fillColor: isDarkMode ? Color.fromRGBO(23, 23, 23, 1) : Color.fromRGBO(239, 239, 239, 1),
+              fillColor: isDarkMode ? const Color.fromRGBO(23, 23, 23, 1) : const Color.fromRGBO(239, 239, 239, 1),
               onPress: onTapAndroidTicket,
               width: 286.w,
               height: 51.h,
@@ -257,69 +246,10 @@ class _MainScreenState extends State<MainScreen> {
             SizedBox(
               height: 77.h,
             )
-            // TextButton(
-            //     onPressed: () {},
-            //     style: ButtonStyle(
-            //         shape: MaterialStateProperty.all(Outlin),
-            //         backgroundColor: MaterialStateProperty.all<Color>(
-            //             isDarkMode ? const Color.fromRGBO(224, 230, 243, 1) : const Color.fromRGBO(144, 26, 45, 1))),
-            //     child: Text(
-            //       'Open Reservation',
-            //       style: TextStyle(
-            //           fontSize: 16,
-            //           fontWeight: FontWeight.w700,
-            //           color: isDarkMode ? const Color.fromRGBO(14, 26, 45, 1) : const Color.fromRGBO(224, 230, 243, 1)),
-            //     ))
-            // FlatButton(
-            //     child: Text('LogIn', style: TextStyle(fontSize: 20.0),),
-            //     color: Colors.blueAccent,
-            //     textColor: Color.fromRGBO(239, 239, 239, 1),
-            //     onPressed: () {},
-            //   ),
-            // BlocListener<MoviesBloc, MoviesState>(
-            //   listener: (context, state) {
-            //     if (state.message != null && state.message!.isNotEmpty) {
-            //       ScaffoldMessenger.of(context).showSnackBar(snackBar(state.message!));
-            //     }
-            //   },
-            //   child: BlocBuilder<MoviesBloc, MoviesState>(
-            //     builder: (context, state) {
-            //       LoggerService.log("state $state");
-            //       if (state is MoviesListLoaded || state is MovieLoaded) {
-            //         List<Movie> movies = state.movies ?? [];
-            //         return Expanded(
-            //             child: movies.isNotEmpty
-            //                 ? ListView(shrinkWrap: true, children: [_buildMoviesList(movies)])
-            //                 : const SingleChildScrollView(
-            //                     physics: AlwaysScrollableScrollPhysics(),
-            //                     child: Text('No Movies found'),
-            //                   ));
-            //       }
-            //       if (state is Error) return Text(state.message ?? '');
-
-            //       return _buildLoading();
-            //     },
-            //   ),
-            // )
           ],
         ),
       ),
     );
-  }
-
-  _buildLoading() {
-    return Column(children: [
-      SizedBox(
-        height: 100.h,
-      ),
-      SizedBox(
-        width: 104,
-        height: 104,
-        child: CircularProgressIndicator(
-          color: isDarkMode ? Color.fromRGBO(239, 239, 239, 1) : Color.fromRGBO(239, 239, 239, 1),
-        ),
-      )
-    ]);
   }
 
   _buildPageHeader() {
@@ -335,7 +265,7 @@ class _MainScreenState extends State<MainScreen> {
                 width: 26.w,
                 height: 26.w,
                 colorFilter: ColorFilter.mode(
-                    isDarkMode ? Color.fromRGBO(239, 239, 239, 1) : Color.fromRGBO(23, 23, 23, 1), BlendMode.srcIn),
+                    isDarkMode ? const Color.fromRGBO(239, 239, 239, 1) : const Color.fromRGBO(23, 23, 23, 1), BlendMode.srcIn),
               ),
               SizedBox(
                 width: 10.w,
@@ -345,7 +275,7 @@ class _MainScreenState extends State<MainScreen> {
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
-                    color: isDarkMode ? Color.fromRGBO(239, 239, 239, 1) : Color.fromRGBO(23, 23, 23, 1)),
+                    color: isDarkMode ? const Color.fromRGBO(239, 239, 239, 1) : const Color.fromRGBO(23, 23, 23, 1)),
               )
             ],
           ),
