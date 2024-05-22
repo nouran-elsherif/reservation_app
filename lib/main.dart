@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:reservation_app/core/services/shared_preferences_service.dart';
 import 'package:reservation_app/core/utils/routes.dart';
 import 'package:reservation_app/presentation/screens/main_screen.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await LocalStorageService.init();
+
   runApp(const MyApp());
 }
 

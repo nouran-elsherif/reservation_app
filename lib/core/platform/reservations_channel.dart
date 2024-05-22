@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:reservation_app/core/services/logger_service.dart';
+import 'package:reservation_app/core/services/shared_preferences_service.dart';
 import 'package:reservation_app/model/reservation.dart';
 
 class ReservationsMethodChannel {
@@ -11,8 +12,8 @@ class ReservationsMethodChannel {
   Future<List<Reservation>?> fetchReservations() async {
     try {
       final result = await methodChannel.invokeMethod('fetchReservations');
-      print("= methodChannel result $result");
       if (result != null) {
+        await LocalStorageService.saveReservations(value: result);
         final response = jsonDecode(result) as Map<String, dynamic>;
         if (response['reservations'] != null) {
           var reservations = response['reservations'];

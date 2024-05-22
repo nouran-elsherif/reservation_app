@@ -45,6 +45,7 @@ dependencies:
   flutter_svg: ^2.0.10+1
   dotted_line: ^3.2.2
   five_pointed_star: ^1.0.3
+  shared_preferences: ^2.2.3
 
 dev_dependencies:
   flutter_test:

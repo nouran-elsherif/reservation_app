@@ -13,13 +13,14 @@ class ReservationsBloc extends Bloc<ReservationsEvent, ReservationsState> {
       emit(Loading());
       if (event is GetReservations) {
         bool isConnected = await NetworkInfo().isConnected();
-        if (!isConnected) {
-          emit(ReservationsError(errorMessage: "Not connected to internet"));
-        }
-        final response = await ReservationsService().fetchReservations();
+        final response = await ReservationsService().fetchReservations(isConnected);
 
         List<Reservation>? reservations = response;
-        emit(ReservationsListLoaded(reservations: reservations!));
+        if (!isConnected && (reservations == null || reservations.isEmpty)) {
+          emit(ReservationsError(errorMessage: "Not connected to internet and no data found in local storage."));
+        } else {
+          emit(ReservationsListLoaded(reservations: reservations!));
+        }
       }
     });
   }

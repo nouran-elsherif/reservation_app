@@ -113,14 +113,28 @@ class _ReservationsListWidgetState extends State<ReservationsListWidget> {
                       )
                     : SingleChildScrollView(
                         physics: const NeverScrollableScrollPhysics(),
-                        child: Text('No Tickets found',
+                        child: Text('No Reservations found',
                             style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w700,
                                 color: widget.isDarkMode ? Colors.white : Colors.black)),
                       ));
           }
-          if (state is Error) return Text(state.message ?? '');
+          if (state is ReservationsError) {
+            return SizedBox(
+                width: 1.sw,
+                child: Column(children: [
+                  SizedBox(
+                    height: 100.h,
+                  ),
+                  Container(
+                    margin: EdgeInsetsDirectional.symmetric(horizontal: 24.w),
+                    child: Text(state.errorMessage ?? '',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w700, color: widget.isDarkMode ? Colors.white : Colors.black)),
+                  )
+                ]));
+          }
 
           return _buildLoading();
         },
@@ -129,11 +143,11 @@ class _ReservationsListWidgetState extends State<ReservationsListWidget> {
   }
 
   _buildLoading() {
-    return Container(
+    return SizedBox(
       width: 1.sw,
       child: Column(children: [
         SizedBox(
-          height: 20.h,
+          height: 100.h,
         ),
         SizedBox(
           width: 30.w,
